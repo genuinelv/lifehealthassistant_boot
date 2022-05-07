@@ -10,8 +10,6 @@ server:
   port: 80
 
 mybatis-plus:
-  global-config:
-    db-config:
-      id-type: auto
+  
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
