@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoDao, User> implements UserInfoService{
+
+    
 }
