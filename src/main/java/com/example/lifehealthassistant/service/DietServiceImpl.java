@@ -1,64 +1,36 @@
 package com.example.lifehealthassistant.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.lifehealthassistant.controller.utils.R;
 import com.example.lifehealthassistant.dao.DietDao;
 import com.example.lifehealthassistant.domain.Diet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
 public class DietServiceImpl extends ServiceImpl<DietDao, Diet> implements DietService{
 
-
+    @Autowired
     private DietDao dietDao;
-
-//    @Override
-//    public R saveDiet(List<MultipartFile> files, Diet diet) {
-//        int filescount=files.size();
-//        for(int i=0;i<filescount;i++){
-//            if(files.get(i).isEmpty()){
-//                return new R(false,"文件名为空");
-//            }
-//            String originFilename =files.get(i).getOriginalFilename();
-//            String fileName=System.currentTimeMillis()+"."+originFilename.substring(originFilename.lastIndexOf(".")+1);
-//            String filePath = "D:\\pic\\";
-//            File dest = new File(filePath+fileName);
-//
-//            if(i==0)
-//                diet.setPicture1(filePath+fileName);
-//            else if(i==1)
-//                diet.setPicture2(filePath+fileName);
-//            else
-//                diet.setPicture3(filePath+fileName);
-//
-//            if(!dest.getParentFile().exists())
-//                dest.getParentFile().mkdirs();
-//            try {
-//                files.get(i).transferTo(dest);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//                return new R(false,"上传失败，服务器错误");
-//
-//            }
-//
-//        }
-//
-//        return new R(dietDao.insert(diet)>0,"上传成功");
-//    }
 
     @Override
     public R saveDietPic(List<MultipartFile> files) {
         int filescount=files.size();
+
         Diet diet=new Diet();
         for(int i=0;i<filescount;i++){
-            if(files.get(i).isEmpty()){
+
+            if(files.get(i).isEmpty()){System.out.println("到saveDietPic循环判断空了");
                 return new R(false,"文件名为空");
             }
             String originFilename =files.get(i).getOriginalFilename();
+            System.out.println(originFilename);
             String fileName=System.currentTimeMillis()+"."+originFilename.substring(originFilename.lastIndexOf(".")+1);
             String filePath = "D:\\pic\\";
             File dest = new File(filePath+fileName);
@@ -83,6 +55,26 @@ public class DietServiceImpl extends ServiceImpl<DietDao, Diet> implements DietS
         }
         return new R(true,diet);
     }
+
+    @Override
+    public Boolean saveDiet(Diet diet, int id) {
+
+        return dietDao.insertDiet(diet,id)>0;
+    }
+
+    @Override
+    public Boolean checkPrimary(Diet diet,int id) {
+        System.out.println(dietDao.selectAll(id));
+        String date= new SimpleDateFormat("yyyy-MM-dd").format(diet.getDatetime()).toString();
+        if(dietDao.selectPrimary(date,id,diet.getDietname()).size()>0){
+
+            return true;//已经存在
+        }
+        else
+            return false;//不存在,可以放
+
+    }
+
 
 
 }

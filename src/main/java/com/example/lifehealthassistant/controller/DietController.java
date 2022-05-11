@@ -22,15 +22,24 @@ public class DietController {
     public R save(@RequestParam("file") List<MultipartFile> files){
         System.out.println(files);
         System.out.println(files.size());
-        return dietService.saveDietPic(files);
+        R re=dietService.saveDietPic(files);
+        System.out.println(re);
+        return re;
     }
 
     @PostMapping("/save_diet")
     @ResponseBody
-    public R save(@RequestBody Diet diet){
+    public R save(@RequestBody Diet diet,@RequestParam("id") Integer userid){
         System.out.println(diet);
-        return new R(dietService.save(diet));
-                //saveDiet(diet);
+        System.out.println(userid);
+        if(dietService.checkPrimary(diet,userid)){
+            System.out.println("这一天的这一顿饭已经登记了");
+            return new R(false,"这一天的这一顿饭已经登记了");
+        }
+        Boolean bl=dietService.saveDiet(diet,userid);
+        System.out.println(bl);
+        return new R(bl);
+
     }
 
 }
