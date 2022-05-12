@@ -11,7 +11,7 @@ import java.util.List;
 public interface DietService extends IService<Diet> {
     R saveDietPic(List<MultipartFile> files);
     Boolean saveDiet(Diet diet,int id);
-    Boolean checkPrimary(Diet diet,int id);
+    Diet checkPrimary(Diet diet,int id);
 
 
 

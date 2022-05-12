@@ -32,7 +32,7 @@ public class DietController {
     public R save(@RequestBody Diet diet,@RequestParam("id") Integer userid){
         System.out.println(diet);
         System.out.println(userid);
-        if(dietService.checkPrimary(diet,userid)){
+        if(dietService.checkPrimary(diet,userid)!=null){
             System.out.println("这一天的这一顿饭已经登记了");
             return new R(false,"这一天的这一顿饭已经登记了");
         }
@@ -41,5 +41,31 @@ public class DietController {
         return new R(bl);
 
     }
+
+    @PostMapping("/get_diet")
+    @ResponseBody
+    public R get(@RequestBody Diet diet,@RequestParam("id") Integer userid){
+        System.out.println(diet);
+        System.out.println(userid);
+        Diet diet1=dietService.checkPrimary(diet,userid);
+        if(diet1==null){
+            System.out.println("这顿饭之前没有登记");
+            return new R(false,new Diet(null,"这顿饭之前没有登记",null,null,null,null));
+        }
+        else{
+            return new R(true,diet1);
+        }
+
+    }
+
+    @PostMapping("/get_diet_pic")
+    public R get(@RequestParam("file") List<MultipartFile> files){
+        System.out.println(files);
+        System.out.println(files.size());
+        R re=dietService.saveDietPic(files);
+        System.out.println(re);
+        return re;
+    }
+    
 
 }

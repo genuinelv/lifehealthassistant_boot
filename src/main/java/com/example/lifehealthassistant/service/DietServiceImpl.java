@@ -32,7 +32,7 @@ public class DietServiceImpl extends ServiceImpl<DietDao, Diet> implements DietS
             String originFilename =files.get(i).getOriginalFilename();
             System.out.println(originFilename);
             String fileName=System.currentTimeMillis()+"."+originFilename.substring(originFilename.lastIndexOf(".")+1);
-            String filePath = "D:\\pic\\";
+            String filePath = "D:\\pic_diet\\";
             File dest = new File(filePath+fileName);
 
             if(i==0)
@@ -63,15 +63,15 @@ public class DietServiceImpl extends ServiceImpl<DietDao, Diet> implements DietS
     }
 
     @Override
-    public Boolean checkPrimary(Diet diet,int id) {
+    public Diet checkPrimary(Diet diet,int id) {
         System.out.println(dietDao.selectAll(id));
         String date= new SimpleDateFormat("yyyy-MM-dd").format(diet.getDatetime()).toString();
         if(dietDao.selectPrimary(date,id,diet.getDietname()).size()>0){
-
-            return true;//已经存在
+            return dietDao.selectPrimary(date,id,diet.getDietname()).get(0);
+             //已经存在
         }
         else
-            return false;//不存在,可以放
+            return null;//不存在,可以放
 
     }
 
