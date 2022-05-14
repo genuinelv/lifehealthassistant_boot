@@ -15,7 +15,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoDao, User> implemen
 
     @Override
     public boolean save(User user) {
-        userInfoDao.save_create(user);
+        userInfoDao.save_create_diet(user);
+        userInfoDao.save_create_disease(user);
         return (userInfoDao.insert(user)>0);
     }
 }

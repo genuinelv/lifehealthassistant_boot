@@ -20,8 +20,6 @@ public interface DietDao extends BaseMapper<Diet> {
     List<Diet> selectAll(int id);
 
 
-
-
     @Select("SELECT * FROM #{id}_diet WHERE TO_DAYS(datetime) = TO_DAYS(#{date}) AND dietname=#{adietname}")
     List<Diet> selectPrimary(String date, int id, String adietname);
 

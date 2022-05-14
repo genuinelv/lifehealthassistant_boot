@@ -20,7 +20,20 @@ public interface UserInfoDao extends BaseMapper<User> {
             "picture3 VARCHAR(255)," +
             "PRIMARY KEY(datetime,dietname)" +
             ");")
-    public boolean save_create(User user);
+    public boolean save_create_diet(User user);
+
+    @Update("create table #{id}_disease" +
+            "(" +
+            "datestart datetime not null," +
+            "dateend datetime not null," +
+            "diseasename VARCHAR(255) not null," +
+            "symptom VARCHAR(255)," +
+            "sympic VARCHAR(255)," +
+            "medicine VARCHAR(255)," +
+            "medpic VARCHAR(255)," +
+            "PRIMARY KEY(datestart,dateend,diseasename)" +
+            ");")
+    public boolean save_create_disease(User user);
 
 
 }
