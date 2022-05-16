@@ -2,6 +2,7 @@ package com.example.lifehealthassistant.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.lifehealthassistant.domain.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
@@ -34,6 +35,13 @@ public interface UserInfoDao extends BaseMapper<User> {
             "PRIMARY KEY(datestart,dateend,diseasename)" +
             ");")
     public boolean save_create_disease(User user);
+
+
+    @Delete("drop table #{id}_diet cascade;")
+    public boolean delete_diet(int id);
+
+    @Delete("drop table #{id}_disease cascade;")
+    public boolean delete_disease(int id);
 
 
 }
