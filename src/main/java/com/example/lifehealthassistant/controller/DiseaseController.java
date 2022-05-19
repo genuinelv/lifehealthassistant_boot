@@ -29,7 +29,7 @@ public class DiseaseController {
 
     @PostMapping("/save_disease")
     @ResponseBody
-    public R save(@RequestBody Disease disease, @RequestParam("id") Integer userid){
+    public R save(@RequestBody Disease disease, @RequestParam("id") String userid){
         System.out.println(disease);
         System.out.println(userid);
 
@@ -41,19 +41,19 @@ public class DiseaseController {
 
     @GetMapping("/get_diseasebyname")
     @ResponseBody
-    public R getByName(@RequestParam("id") Integer userid,@RequestParam("diseasename") String diseasename){
+    public R getByName(@RequestParam("id") String userid,@RequestParam("diseasename") String diseasename){
         System.out.println(diseasename);
-        return new R(true,diseaseService.getDiseaseByName(diseasename,userid));
+        return new R(true,null,diseaseService.getDiseaseByName(diseasename,userid));
     }
     @GetMapping("/get_diseaseall")
     @ResponseBody
-    public R getAll(@RequestParam("id") Integer userid){
-        return new R(true,diseaseService.getDiseaseAll(userid));
+    public R getAll(@RequestParam("id") String userid){
+        return new R(true,null,diseaseService.getDiseaseAll(userid));
     }
 
     @DeleteMapping("/delete_disease")
     @ResponseBody
-    public R delete(@RequestBody Disease disease, @RequestParam("id") Integer userid){
+    public R delete(@RequestBody Disease disease, @RequestParam("id") String userid){
         return new R(diseaseService.deleteDisease(disease,userid));
     }
 

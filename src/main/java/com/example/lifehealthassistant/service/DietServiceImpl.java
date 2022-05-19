@@ -27,7 +27,7 @@ public class DietServiceImpl extends ServiceImpl<DietDao, Diet> implements DietS
         for(int i=0;i<filescount;i++){
 
             if(files.get(i).isEmpty()){System.out.println("到saveDietPic循环判断空了");
-                return new R(false,"文件名为空");
+                return new R(false,"文件名为空",null);
             }
             String originFilename =files.get(i).getOriginalFilename();
             System.out.println(originFilename);
@@ -48,22 +48,22 @@ public class DietServiceImpl extends ServiceImpl<DietDao, Diet> implements DietS
                 files.get(i).transferTo(dest);
             }catch (Exception e){
                 e.printStackTrace();
-                return new R(false,"上传失败，服务器错误");
+                return new R(false,"上传失败，服务器错误",null);
 
             }
 
         }
-        return new R(true,diet);
+        return new R(true,null,diet);
     }
 
     @Override
-    public Boolean saveDiet(Diet diet, int id) {
+    public Boolean saveDiet(Diet diet, String id) {
 
         return dietDao.insertDiet(diet,id)>0;
     }
 
     @Override
-    public Diet checkPrimary(Diet diet,int id) {
+    public Diet checkPrimary(Diet diet,String id) {
         System.out.println(dietDao.selectAll(id));
         String date= new SimpleDateFormat("yyyy-MM-dd").format(diet.getDatetime()).toString();
         if(dietDao.selectPrimary(date,id,diet.getDietname()).size()>0){
@@ -75,6 +75,20 @@ public class DietServiceImpl extends ServiceImpl<DietDao, Diet> implements DietS
 
     }
 
+    @Override
+    public List<Diet> getDietAll(String id) {
+        return dietDao.selectAll(id);
+    }
+
+    @Override
+    public List<Diet> getDietByFood(String id, String food) {
+        return dietDao.selectByContent(id,food);
+    }
+
+    @Override
+    public Boolean deleteDiet(Diet diet, String id) {
+        return dietDao.deleteDiet(diet,id)>0;
+    }
 
 
 }

@@ -4,6 +4,7 @@ package com.example.lifehealthassistant.controller;
 import com.example.lifehealthassistant.controller.utils.R;
 import com.example.lifehealthassistant.domain.User;
 import com.example.lifehealthassistant.service.UserInfoService;
+import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,9 +19,10 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
 
+
     @GetMapping("/{id}")
-    public R getById(@PathVariable Integer id){
-        return new R(true,userInfoService.getById(id));
+    public R getById(@PathVariable String id){
+        return new R(true,null,userInfoService.getById(id));
     }
 
     @PostMapping
@@ -33,12 +35,16 @@ public class UserInfoController {
         return userInfoService.saveUserPic(file);
     }
     @PutMapping("/{id}")
-    public R update(@RequestBody User user,@PathVariable Integer id) {
-        return new R(userInfoService.updateById(user));
+    public R update(@RequestBody User user,@PathVariable String id) {
+        return new R(userInfoService.updateByIdWithoutPs(user));
+    }
+    @PutMapping("/ps/{id}")
+    public R updatePs(@RequestBody User user,@PathVariable String id) {
+        return new R(userInfoService.updateByIdPs(user));
     }
 
     @DeleteMapping("/{id}")
-    public R remove(@PathVariable Integer id){
+    public R remove(@PathVariable String id){
         return new R(userInfoService.deleteById(id));
     }
 }

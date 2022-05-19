@@ -11,9 +11,9 @@ import java.util.List;
 public interface DiseaseService extends IService<Disease> {
 
     R saveDiseasePic(List<MultipartFile> files);
-    Boolean saveDisease(Disease disease, int id);
-    List<Disease> getDiseaseAll(int id);
-    List<Disease> getDiseaseByName(String name,int id);
-    Boolean deleteDisease(Disease disease,int id);
+    Boolean saveDisease(Disease disease, String id);
+    List<Disease> getDiseaseAll(String id);
+    List<Disease> getDiseaseByName(String name,String id);
+    Boolean deleteDisease(Disease disease,String id);
 
 }

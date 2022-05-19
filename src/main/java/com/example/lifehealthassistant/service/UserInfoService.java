@@ -9,5 +9,10 @@ import java.util.List;
 
 public interface UserInfoService extends IService<User> {
     R saveUserPic(MultipartFile file);
-    Boolean deleteById(int id);
+    Boolean deleteById(String id);
+
+
+    Boolean updateByIdWithoutPs(User user);
+
+    Boolean updateByIdPs(User user);
 }

@@ -4,6 +4,7 @@ package com.example.lifehealthassistant.controller;
 import com.example.lifehealthassistant.controller.utils.R;
 import com.example.lifehealthassistant.dao.DietDao;
 import com.example.lifehealthassistant.domain.Diet;
+import com.example.lifehealthassistant.domain.Disease;
 import com.example.lifehealthassistant.service.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +30,12 @@ public class DietController {
 
     @PostMapping("/save_diet")
     @ResponseBody
-    public R save(@RequestBody Diet diet,@RequestParam("id") Integer userid){
+    public R save(@RequestBody Diet diet,@RequestParam("id") String userid){
         System.out.println(diet);
         System.out.println(userid);
         if(dietService.checkPrimary(diet,userid)!=null){
             System.out.println("这一天的这一顿饭已经登记了");
-            return new R(false,"这一天的这一顿饭已经登记了");
+            return new R(false,"这一天的这一顿饭已经登记了",null);
         }
         Boolean bl=dietService.saveDiet(diet,userid);
         System.out.println(bl);
@@ -44,28 +45,39 @@ public class DietController {
 
     @PostMapping("/get_diet")
     @ResponseBody
-    public R get(@RequestBody Diet diet,@RequestParam("id") Integer userid){
+    public R get(@RequestBody Diet diet,@RequestParam("id") String userid){
         System.out.println(diet);
         System.out.println(userid);
         Diet diet1=dietService.checkPrimary(diet,userid);
         if(diet1==null){
             System.out.println("这顿饭之前没有登记");
-            return new R(false,new Diet(null,"这顿饭之前没有登记",null,null,null,null));
+            return new R(false,"这顿饭之前没有登记",null);
         }
         else{
-            return new R(true,diet1);
+            return new R(true,null,diet1);
         }
-
     }
 
-    @PostMapping("/get_diet_pic")
-    public R get(@RequestParam("file") List<MultipartFile> files){
-        System.out.println(files);
-        System.out.println(files.size());
-        R re=dietService.saveDietPic(files);
-        System.out.println(re);
-        return re;
+
+    @GetMapping("/get_diet_all")
+    @ResponseBody
+    public R getAll(@RequestParam("id") String userid){
+        return new R(true,null,dietService.getDietAll(userid));
     }
+
+    @GetMapping("/get_diet_content")
+    @ResponseBody
+    public R getByContent(@RequestParam("id") String userid,@RequestParam("food") String food){
+        return new R(true,null,dietService.getDietByFood(userid,food));
+    }
+
+    @DeleteMapping("/delete_diet")
+    @ResponseBody
+    public R delete(@RequestBody Diet diet, @RequestParam("id") String userid){
+        return new R(dietService.deleteDiet(diet,userid));
+    }
+
+
     
 
 }

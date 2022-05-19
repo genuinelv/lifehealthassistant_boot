@@ -27,7 +27,7 @@ public class DiseaseServiceImpl extends ServiceImpl<DiseaseDao, Disease> impleme
         for(int i=0;i<filescount;i++) {
 
             if (files.get(i).isEmpty()) {//System.out.println("到saveDietPic循环判断空了");
-                return new R(false, "文件名为空");
+                return new R(false, "文件名为空",null);
             }
             String originFilename = files.get(i).getOriginalFilename();
             System.out.println(originFilename);
@@ -46,29 +46,29 @@ public class DiseaseServiceImpl extends ServiceImpl<DiseaseDao, Disease> impleme
                 files.get(i).transferTo(dest);
             } catch (Exception e) {
                 e.printStackTrace();
-                return new R(false, "上传失败，服务器错误");
+                return new R(false, "上传失败，服务器错误",null);
             }
         }
-        return new R(true,disease);
+        return new R(true,null,disease);
     }
 
     @Override
-    public Boolean saveDisease(Disease disease, int id) {
+    public Boolean saveDisease(Disease disease, String id) {
         return diseaseDao.insertDisease(disease,id)>0;
     }
 
     @Override
-    public List<Disease> getDiseaseAll(int id) {
+    public List<Disease> getDiseaseAll(String id) {
         return diseaseDao.selectAll(id);
     }
 
     @Override
-    public List<Disease> getDiseaseByName(String name, int id) {
+    public List<Disease> getDiseaseByName(String name, String id) {
         return diseaseDao.selectByDiseasename(id,name);
     }
 
     @Override
-    public Boolean deleteDisease(Disease disease, int id) {
+    public Boolean deleteDisease(Disease disease, String id) {
         File file=new File(disease.getSympic());
         File file1=new File(disease.getMedpic());
         if(!(file.delete()&&file1.delete()))
