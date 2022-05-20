@@ -58,8 +58,8 @@ public interface UserInfoDao extends BaseMapper<User> {
     @Delete("drop table ${id}_health cascade;")
     public boolean delete_health(String id);
 
-    @Update("UPDATE user SET name=#{user.name},sex=#{user.sex},photo=#{user.photo} WHERE id=#{user.id}")
+    @Update("UPDATE user SET name=#{name},sex=#{sex},photo=#{photo} WHERE id=#{id}")
     Boolean updateByIdWithoutPs(User user);
-    @Update("UPDATE user SET password=#{user.password} WHERE id=#{user.id}")
+    @Update("UPDATE user SET password=#{password} WHERE id=#{id}")
     Boolean updateByIdPs(User user);
 }

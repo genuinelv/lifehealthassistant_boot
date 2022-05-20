@@ -146,7 +146,9 @@ public class UserEmailServiceImpl extends ServiceImpl<UserEmailDao, Useremail> i
         message.setSubject("密码服务邮箱验证");
         String code= userInfoDao.selectById(id).getPassword();
         message.setText("您绑定的账号的密码是：" + code + "。请妥善保管，阅完即焚，切勿泄露");
+
         javaMailSender.send(message);
+
         return new R(true,"成功发送",email);
 
     }

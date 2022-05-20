@@ -22,7 +22,7 @@ public interface DietDao extends BaseMapper<Diet> {
     List<Diet> selectAll(String id);
 
 
-    @Select("SELECT * FROM ${id}_diet WHERE food like '%${value}%")
+    @Select("SELECT * FROM ${id}_diet WHERE food like '%${value}%'")
     List<Diet> selectByContent(String id, String value);
 
     @Select("SELECT * FROM ${id}_diet WHERE TO_DAYS(datetime) = TO_DAYS(#{date}) AND dietname=#{adietname}")

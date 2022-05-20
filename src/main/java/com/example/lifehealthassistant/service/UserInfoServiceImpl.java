@@ -117,6 +117,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoDao, User> implemen
 
     @Override
     public Boolean updateByIdWithoutPs(User user) {
+        System.out.println(user);
         return userInfoDao.updateByIdWithoutPs(user);
     }
 
