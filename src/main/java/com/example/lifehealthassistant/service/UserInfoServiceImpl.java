@@ -104,6 +104,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoDao, User> implemen
             }
 
         }
+        userEmailDao.deleteById(id);
         userInfoDao.delete_disease(id);
         userInfoDao.delete_health(id);
         User user=userInfoDao.selectById(id);

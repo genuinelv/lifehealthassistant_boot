@@ -3,6 +3,8 @@ package com.example.lifehealthassistant.domain;
 
 import lombok.Data;
 
+import java.sql.Date;
+
 @Data
 public class User {
     private String id;
@@ -10,6 +12,8 @@ public class User {
     private String name;
     private String sex;
     private String photo;
+    private Date birthday;
+
 
 
 }

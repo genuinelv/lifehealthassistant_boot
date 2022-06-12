@@ -15,7 +15,7 @@ public interface UserInfoDao extends BaseMapper<User> {
             "(" +
             "datetime datetime not null," +
             "food VARCHAR(255)," +
-            "dietname VARCHAR(255)," +
+            "dietname VARCHAR(16)," +
             "picture1 VARCHAR(255)," +
             "picture2 VARCHAR(255)," +
             "picture3 VARCHAR(255)," +
