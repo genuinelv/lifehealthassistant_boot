@@ -29,7 +29,7 @@ public class UserInfoController {
     public R save(@RequestBody User user){
         return new R(userInfoService.save(user));
     }
-
+    
     @PutMapping
     public R updatepic(@RequestParam("file") MultipartFile file) {
         return userInfoService.saveUserPic(file);
